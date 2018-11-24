@@ -40,9 +40,8 @@ VALGRIND = os.getenv("VALGRIND", config['VALGRIND']) == "1"
 SLOW_MACHINE = os.getenv("SLOW_MACHINE", "0") == "1"
 
 
-def wait_for(success, timeout=TIMEOUT):
+def wait_for(success, timeout=TIMEOUT, interval=0.25):
     start_time = time.time()
-    interval = 0.25
     while not success() and time.time() < start_time + timeout:
         time.sleep(interval)
         interval *= 2

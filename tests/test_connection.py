@@ -557,8 +557,9 @@ def test_shutdown_awaiting_lockin(node_factory, bitcoind):
     l2.daemon.wait_for_log(' to ONCHAIN')
 
     bitcoind.generate_block(100)
-    wait_for(lambda: l1.rpc.listpeers()['peers'] == [])
-    wait_for(lambda: l2.rpc.listpeers()['peers'] == [])
+    sync_blockheight(bitcoind, [l1, l2])
+    wait_for(lambda: l1.rpc.listpeers()['peers'] == [], interval=1)
+    wait_for(lambda: l2.rpc.listpeers()['peers'] == [], interval=1)
 
 
 def test_funding_change(node_factory, bitcoind):
