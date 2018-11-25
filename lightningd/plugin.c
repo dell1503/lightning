@@ -401,7 +401,7 @@ static bool plugin_opts_add(const struct plugin_request *req)
 static void plugin_rpcmethod_destroy(struct json_command *cmd,
 				     struct jsonrpc *rpc)
 {
-	jsonrpc_command_remove(rpc, cmd->name);
+	//jsonrpc_command_remove(rpc, cmd->name);
 }
 
 static void plugin_rpcmethod_cb(const struct plugin_request *req,
