@@ -506,13 +506,13 @@ static bool plugin_rpcmethod_add(struct plugin *plugin, const char *buffer,
 	}
 
 	cmd = tal(plugin, struct json_command);
-	cmd->name = tal_strndup(plugin, buffer + nametok->start,
+	cmd->name = tal_strndup(cmd, buffer + nametok->start,
 				nametok->end - nametok->start);
-	cmd->description = tal_strndup(plugin, buffer + desctok->start,
+	cmd->description = tal_strndup(cmd, buffer + desctok->start,
 				       desctok->end - desctok->start);
 	if (longdesctok)
 		cmd->verbose =
-		    tal_strndup(plugin, buffer + longdesctok->start,
+		    tal_strndup(cmd, buffer + longdesctok->start,
 				longdesctok->end - longdesctok->start);
 	else
 		cmd->verbose = cmd->description;
