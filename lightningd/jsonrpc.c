@@ -747,8 +747,11 @@ void jsonrpc_command_remove(struct jsonrpc *rpc, const char *method)
 	// restart plugins we should shift them out.
 	for (size_t i=0; i<tal_count(rpc->commands); i++) {
 		cmd = rpc->commands[i];
-		if (cmd && streq(cmd->name, method))
-			rpc->commands[i] = tal_free(cmd);
+		if (cmd && streq(cmd->name, method)) {
+			/* Do not fee here, this is called in the
+			 * destructor of the json_command */
+			rpc->commands[i] = NULL;
+		}
 	}
 }
 
