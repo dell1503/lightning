@@ -742,11 +742,14 @@ bool jsonrpc_command_add(struct jsonrpc *rpc, struct json_command *command)
 
 void jsonrpc_command_remove(struct jsonrpc *rpc, const char *method)
 {
+	struct json_command *cmd;
 	// FIXME: Currently leaves NULL entries in the table, if we
 	// restart plugins we should shift them out.
-	for (size_t i=0; i<tal_count(rpc->commands); i++)
-		if (streq(rpc->commands[i]->name, method))
-			rpc->commands[i] = tal_free(rpc->commands[i]);
+	for (size_t i=0; i<tal_count(rpc->commands); i++) {
+		cmd = rpc->commands[i];
+		if (cmd && streq(cmd->name, method))
+			rpc->commands[i] = tal_free(cmd);
+	}
 }
 
 struct jsonrpc *jsonrpc_new(const tal_t *ctx, struct lightningd *ld)
